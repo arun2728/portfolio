@@ -81,7 +81,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Open to opportunities
+                    Open to Work
                   </div>
                   <div>Mumbai, India</div>
                 </div>
@@ -93,7 +93,7 @@ export default function Home() {
                 <div className="text-sm text-muted-foreground font-mono">CURRENTLY</div>
                 <div className="space-y-2">
                   <div className="text-foreground">Founding Engineer - AI</div>
-                  <div className="text-muted-foreground">@ Lamatic.ai</div>
+                  <div className="text-muted-foreground cursor-pointer"><a href="https://lamatic.ai" target="_blank" rel="noopener noreferrer">@ Lamatic.ai</a></div>
                   <div className="text-xs text-muted-foreground">March 2024 — Present</div>
                 </div>
               </div>
@@ -137,14 +137,14 @@ export default function Home() {
                 },
                 {
                   year: "2022",
-                  role: "Machine Learning Engineer",
+                  role: "SDE - AI/ML",
                   company: "Samespace",
                   description: "Created ML-based productivity monitoring system, AI messaging assistant, meeting insights using ASR, and semantic image search.",
                   tech: ["Python", "TensorFlow", "NLP", "OpenAI", "ASR"],
                 },
                 {
                   year: "2021",
-                  role: "Machine Learning Engineer",
+                  role: "ML Engineer - NLP",
                   company: "Enterpret",
                   description: "Improved text classification pipeline, optimized ML models, designed CI/CD pipelines, and implemented drift & anomaly detection systems.",
                   tech: ["Python", "ML Pipelines", "CI/CD", "Data Science"],
