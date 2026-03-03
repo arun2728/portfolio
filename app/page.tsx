@@ -62,7 +62,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
               <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider">PORTFOLIO / 2025</div>
+                <div className="text-sm text-muted-foreground font-mono tracking-wider">PORTFOLIO / 2026</div>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
                   Arun
                   <br />
@@ -310,7 +310,7 @@ export default function Home() {
                 {[
                   { name: "GitHub", handle: "@arun2728", url: "https://github.com/arun2728" },
                   { name: "LinkedIn", handle: "arun-addagatla", url: "https://www.linkedin.com/in/arun-addagatla" },
-                  { name: "Portfolio", handle: "arun2728.github.io", url: "https://arun2728.github.io/arunaddagatla/" },
+                  { name: "Resume", handle: "Open PDF", url: "https://drive.google.com/file/d/1d8OQIpGrO33-Pyp8J8rlAwLHwNfI_xOr/view?usp=drive_link" },
                   { name: "Blog", handle: "Medium", url: "https://arunaddagatla.medium.com/" },
                 ].map((social) => (
                   <Link
