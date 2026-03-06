@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
@@ -22,7 +23,7 @@ export default function Home() {
           }
         })
       },
-      { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     )
 
     sectionsRef.current.forEach((section) => {
@@ -40,7 +41,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative">
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
-          {["intro", "work", "thoughts", "connect"].map((section) => (
+          {["intro", "work", "talks", "thoughts", "education", "connect"].map((section) => (
             <button
               key={section}
               onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
@@ -56,7 +57,7 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16">
         <header
           id="intro"
-          ref={(el) => (sectionsRef.current[0] = el)}
+          ref={(el) => { sectionsRef.current[0] = el }}
           className="min-h-screen flex items-center opacity-0"
         >
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
@@ -117,7 +118,7 @@ export default function Home() {
 
         <section
           id="work"
-          ref={(el) => (sectionsRef.current[1] = el)}
+          ref={(el) => { sectionsRef.current[1] = el }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
@@ -192,12 +193,84 @@ export default function Home() {
         </section>
 
         <section
-          id="thoughts"
-          ref={(el) => (sectionsRef.current[2] = el)}
+          id="talks"
+          ref={(el) => { sectionsRef.current[2] = el }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
-            <h2 className="text-3xl sm:text-4xl font-light">Recent Thoughts</h2>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light">Talks & Presentations</h2>
+              <div className="text-sm text-muted-foreground font-mono">2025 — 2026</div>
+            </div>
+
+            <div className="grid gap-8 sm:gap-10 lg:grid-cols-2">
+              {[
+                {
+                  title: "Why MCP Matters: Revolutionizing Context for LLMs",
+                  event: "Daytona Developers Club Tour '25",
+                  location: "Mumbai, India",
+                  date: "May 3, 2025",
+                  type: "In-Person",
+                  description:
+                    "Presented how Model Context Protocol (MCP) enables LLMs to connect with live data and tools in real-time, breaking free from rigid APIs and static integrations. Included hands-on Python and OpenAI demos.",
+                  image: "/talk1.png",
+                },
+                {
+                  title: "Why Prompting Isn't Enough: The Case for RAG",
+                  event: "Lamatic.ai Community Session",
+                  location: "Online",
+                  date: "Jan 16, 2026",
+                  type: "Online",
+                  description:
+                    "Discussed why RAG is a system design problem, not just a feature — covering common failure modes, retrieval strategies, evaluation loops, and why prompt engineering alone falls short in production.",
+                  image: "/talk2.png",
+                },
+              ].map((talk, index) => (
+                <div
+                  key={index}
+                  className="group border border-border rounded-lg overflow-hidden hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg"
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image
+                      src={talk.image}
+                      alt={talk.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="px-3 py-1 text-xs font-mono bg-background/80 backdrop-blur-sm border border-border rounded-full">
+                        {talk.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6 sm:p-8 space-y-4">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
+                      <span>{talk.date}</span>
+                      <span>{talk.location}</span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
+                      {talk.title}
+                    </h3>
+
+                    <div className="text-sm text-muted-foreground">{talk.event}</div>
+
+                    <p className="text-muted-foreground leading-relaxed">{talk.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="thoughts"
+          ref={(el) => { sectionsRef.current[3] = el }}
+          className="min-h-screen py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <h2 className="text-3xl sm:text-4xl font-light">Popular Posts</h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
               {[
@@ -271,10 +344,133 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+
+            <Link
+              href="https://arunaddagatla.medium.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center gap-3 py-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
+            >
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                Read more on Medium
+              </span>
+              <svg
+                className="w-4 h-4 text-muted-foreground group-hover:text-foreground transform group-hover:translate-x-1 transition-all duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </section>
 
-        <section id="connect" ref={(el) => (sectionsRef.current[3] = el)} className="py-20 sm:py-32 opacity-0">
+        <section
+          id="education"
+          ref={(el) => { sectionsRef.current[4] = el }}
+          className="py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            {/* <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light">Education & Certifications</h2>
+              <div className="text-sm text-muted-foreground font-mono">2018 — 2022</div>
+            </div> */}
+
+          <h2 className="text-3xl sm:text-4xl font-light">Education & Certifications</h2>
+
+
+            <div className="space-y-10">
+              <div className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                  <div className="space-y-2">
+                    <h3 className="text-lg sm:text-xl font-medium">B.E. in Computer Engineering</h3>
+                    <div className="text-muted-foreground">MCT&apos;s Rajiv Gandhi Institute of Technology</div>
+                    <div className="text-sm text-muted-foreground">University of Mumbai</div>
+                  </div>
+                  <div className="flex items-center gap-3 sm:flex-col sm:items-end">
+                    {/* <div className="text-sm text-muted-foreground font-mono">2018 — 2022</div> */}
+                    <span className="px-3 py-1 text-xs border border-border rounded-full font-mono">
+                      9.33 CGPA
+                    </span>
+                  </div>
+                </div>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                  Studied core CS subjects including Data Structures, Algorithms, DBMS, OS, and AI. Completed additional coursework in Deep Learning, Data Science, and Machine Learning.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="text-sm text-muted-foreground font-mono">CERTIFICATIONS</div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    {
+                      name: "Deep Learning A-Z: Hands-On ANNs",
+                      issuer: "Udemy",
+                      date: "Mar 2021",
+                      url: "https://www.udemy.com/certificate/UC-ed81752d-7a2a-4846-8ee3-c2b5e84db8c1/",
+                    },
+                    {
+                      name: "Neural Networks and Deep Learning",
+                      issuer: "Coursera · deeplearning.ai",
+                      date: "Dec 2020",
+                      url: "https://coursera.org/share/e377adb2fd7534cfa6ae43630370e967",
+                    },
+                    {
+                      name: "The Data Science Course 2020",
+                      issuer: "Udemy",
+                      date: "Nov 2020",
+                      url: "https://udemy-certificate.s3.amazonaws.com/image/UC-e74f9313-11ec-4602-b27e-917920654ea4.jpg?v=1606298747000",
+                    },
+                    {
+                      name: "Master Python Programming",
+                      issuer: "Udemy",
+                      date: "Apr 2020",
+                      url: "https://udemy-certificate.s3.amazonaws.com/image/UC-0d7f635b-4497-4737-aadc-edf1d152abdc.jpg?v=1586978193000",
+                    },
+                    {
+                      name: "Tools for Data Science",
+                      issuer: "Coursera · IBM",
+                      date: "Jan 2020",
+                      url: "https://www.coursera.org/account/accomplishments/verify/PGBAD347DM26",
+                    },
+                    {
+                      name: "Foundation of Data Science?",
+                      issuer: "Coursera · IBM",
+                      date: "Dec 2019",
+                      url: "https://www.coursera.org/account/accomplishments/certificate/K9GF6BVCF2RR",
+                    },
+                    // {
+                    //   name: "Python Data Structures",
+                    //   issuer: "Coursera · University of Michigan",
+                    //   date: "Dec 2019",
+                    //   url: "https://coursera.org/share/1f96751248e13812bfe3d91e96a6c5bd",
+                    // },
+                  ].map((cert, index) => (
+                    <Link
+                      key={index}
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/cert flex items-start justify-between gap-4 p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300"
+                    >
+                      <div className="space-y-1 min-w-0">
+                        <div className="text-sm font-medium group-hover/cert:text-muted-foreground transition-colors duration-300 truncate">
+                          {cert.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground">{cert.issuer}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground font-mono shrink-0">{cert.date}</div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="connect" ref={(el) => { sectionsRef.current[5] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-3xl sm:text-4xl font-light">Let's Connect</h2>
@@ -389,7 +585,7 @@ export default function Home() {
         </footer>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none"></div>
+      <div className="fixed bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background via-background/80 to-transparent pointer-events-none"></div>
     </div>
   )
 }
