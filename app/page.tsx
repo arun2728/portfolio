@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { AnimatedBackground } from "@/components/animated-background"
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true)
@@ -39,6 +40,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
+      <AnimatedBackground />
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
           {["intro", "work", "talks", "thoughts", "education", "connect"].map((section) => (
