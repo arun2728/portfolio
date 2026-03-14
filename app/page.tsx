@@ -3,15 +3,28 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { AnimatedBackground } from "@/components/animated-background"
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true)
   const [activeSection, setActiveSection] = useState("")
+  const [scrollProgress, setScrollProgress] = useState(0)
   const sectionsRef = useRef<(HTMLElement | null)[]>([])
+  const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark)
   }, [isDark])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = (window.scrollY / totalHeight) * 100
+      setScrollProgress(progress)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,23 +46,56 @@ export default function Home() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (glowRef.current) {
+        glowRef.current.style.left = `${e.clientX}px`
+        glowRef.current.style.top = `${e.clientY}px`
+      }
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   const toggleTheme = () => {
     setIsDark(!isDark)
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      <AnimatedBackground isDark={isDark} />
+      
+      <div
+        className="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-50 transition-all duration-150"
+        style={{ width: `${scrollProgress}%` }}
+      />
+      
+      <div
+        ref={glowRef}
+        className="pointer-events-none fixed w-[500px] h-[500px] rounded-full opacity-20 blur-[100px] -translate-x-1/2 -translate-y-1/2 z-0 transition-opacity duration-300"
+        style={{
+          background: isDark
+            ? "radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 51, 234, 0.3) 50%, transparent 70%)"
+            : "radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0.2) 50%, transparent 70%)",
+        }}
+      />
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
           {["intro", "work", "talks", "thoughts", "education", "connect"].map((section) => (
-            <button
-              key={section}
-              onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
-              className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-              aria-label={`Navigate to ${section}`}
-            />
+            <div key={section} className="group relative flex items-center">
+              <button
+                onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
+                className={`w-2 h-8 rounded-full transition-all duration-500 ${
+                  activeSection === section 
+                    ? "bg-foreground shadow-[0_0_10px_rgba(255,255,255,0.3)]" 
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                }`}
+                aria-label={`Navigate to ${section}`}
+              />
+              <span className="absolute left-6 px-2 py-1 text-xs font-mono bg-background/90 backdrop-blur-sm border border-border rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </span>
+            </div>
           ))}
         </div>
       </nav>
@@ -63,11 +109,15 @@ export default function Home() {
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
               <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider">PORTFOLIO / 2026</div>
+                <div className="text-sm text-muted-foreground font-mono tracking-wider animate-pulse-slow">PORTFOLIO / 2026</div>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
-                  Arun
+                  <span className="bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    Arun
+                  </span>
                   <br />
-                  <span className="text-muted-foreground">Addagatla</span>
+                  <span className="bg-gradient-to-r from-muted-foreground via-blue-500 to-purple-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    Addagatla
+                  </span>
                 </h1>
               </div>
 
@@ -80,11 +130,17 @@ export default function Home() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Open to Work
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/10">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                    <span className="text-green-500">Open to Work</span>
                   </div>
-                  <div>Mumbai, India</div>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Mumbai, India
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,10 +158,11 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="text-sm text-muted-foreground font-mono">FOCUS</div>
                 <div className="flex flex-wrap gap-2">
-                  {["LLM", "Conversational AI", "GenAI", "Agentic AI", "MLOps", "Python"].map((skill) => (
+                  {["LLM", "Conversational AI", "GenAI", "Agentic AI", "MLOps", "Python"].map((skill, index) => (
                     <span
                       key={skill}
-                      className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                      className="px-3 py-1 text-xs border border-border rounded-full hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       {skill}
                     </span>
@@ -123,7 +180,10 @@ export default function Home() {
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
+              <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+                Selected Work
+                <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+              </h2>
               <div className="text-sm text-muted-foreground font-mono">2019 — 2025</div>
             </div>
 
@@ -160,7 +220,7 @@ export default function Home() {
               ].map((job, index) => (
                 <div
                   key={index}
-                  className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
+                  className="group relative grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-transparent transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-500/5 hover:to-purple-500/5 rounded-lg hover:px-4 hover:-mx-4"
                 >
                   <div className="lg:col-span-2">
                     <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
@@ -199,7 +259,10 @@ export default function Home() {
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <h2 className="text-3xl sm:text-4xl font-light">Talks & Presentations</h2>
+              <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+                Talks & Presentations
+                <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></span>
+              </h2>
               <div className="text-sm text-muted-foreground font-mono">2025 — 2026</div>
             </div>
 
@@ -269,7 +332,7 @@ export default function Home() {
               ].map((talk, index) => (
                 <div
                   key={index}
-                  className="group border border-border rounded-lg overflow-hidden hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg"
+                  className="group border border-border rounded-lg overflow-hidden hover:border-muted-foreground/50 transition-all duration-500 hover-lift glow-on-hover"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     {talk.image ? (
@@ -369,7 +432,10 @@ export default function Home() {
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
-            <h2 className="text-3xl sm:text-4xl font-light">Popular Posts</h2>
+            <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+              Popular Posts
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full"></span>
+            </h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
               {[
@@ -409,7 +475,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <article className="h-full p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg cursor-pointer">
+                  <article className="h-full p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover-lift glow-on-hover cursor-pointer">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
                       <span>{post.date}</span>
@@ -471,16 +537,14 @@ export default function Home() {
           className="py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
-            {/* <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <h2 className="text-3xl sm:text-4xl font-light">Education & Certifications</h2>
-              <div className="text-sm text-muted-foreground font-mono">2018 — 2022</div>
-            </div> */}
-
-          <h2 className="text-3xl sm:text-4xl font-light">Education & Certifications</h2>
+          <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+            Education & Certifications
+            <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full"></span>
+          </h2>
 
 
             <div className="space-y-10">
-              <div className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500">
+              <div className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover-lift">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
                   <div className="space-y-2">
                     <h3 className="text-lg sm:text-xl font-medium">B.E. in Computer Engineering</h3>
@@ -552,7 +616,7 @@ export default function Home() {
                       href={cert.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/cert flex items-start justify-between gap-4 p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300"
+                      className="group/cert flex items-start justify-between gap-4 p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover-lift"
                     >
                       <div className="space-y-1 min-w-0">
                         <div className="text-sm font-medium group-hover/cert:text-muted-foreground transition-colors duration-300 truncate">
@@ -572,7 +636,10 @@ export default function Home() {
         <section id="connect" ref={(el) => { sectionsRef.current[5] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
-              <h2 className="text-3xl sm:text-4xl font-light">Let's Connect</h2>
+              <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+                Let's Connect
+                <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"></span>
+              </h2>
 
               <div className="space-y-6">
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
@@ -613,7 +680,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
+                    className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover-lift glow-on-hover"
                   >
                     <div className="space-y-2">
                       <div className="text-foreground group-hover:text-muted-foreground transition-colors duration-300">
