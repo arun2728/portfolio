@@ -193,29 +193,29 @@ export default function Home() {
                   year: "2024",
                   role: "Founding Engineer - AI",
                   company: "Lamatic.ai",
-                  description: "Architected core tech stack, including serverless flow executor, ETL pipeline, semantic RAG, and agentic AI infrastructure supporting 1M+ monthly requests.",
-                  tech: ["Python", "Kubernetes", "LLM", "GenAI", "Semantic RAG"],
+                  description: "As the first engineering hire, built 80%+ of Lamatic's core stack. Architected serverless executor processing 1M+ monthly requests, designed AI evaluation framework with LLM-as-a-judge, and built Kubernetes-based ETL pipelines with OAuth systems.",
+                  tech: ["Python", "Kubernetes", "LLM", "RAG", "Agentic AI"],
                 },
                 {
                   year: "2022",
                   role: "SDE - AI/ML",
                   company: "Samespace",
-                  description: "Created ML-based productivity monitoring system, AI messaging assistant, meeting insights using ASR, and semantic image search.",
-                  tech: ["Python", "TensorFlow", "NLP", "OpenAI", "ASR"],
+                  description: "Fine-tuned open-source LLMs (Mistral, LLaMA-2) using LoRA/PEFT and 8-bit quantization on bilingual datasets, improving fluency by 30%. Built scalable LLM Inference Engine with dynamic batching, multi-GPU support, and PagedAttention achieving 106 tokens/sec. Optimized Whisper V3 ASR with ONNX/TensorRT and Triton deployment, reducing latency to 0.1-0.4s.",
+                  tech: ["LLM Fine-tuning", "LoRA/PEFT", "ONNX", "TensorRT", "Triton"],
                 },
                 {
                   year: "2021",
-                  role: "ML Engineer - NLP",
+                  role: "Machine Learning Intern - NLP",
                   company: "Enterpret",
-                  description: "Improved text classification pipeline, optimized ML models, designed CI/CD pipelines, and implemented drift & anomaly detection systems.",
-                  tech: ["Python", "ML Pipelines", "CI/CD", "Data Science"],
+                  description: "Built serverless multilingual sentiment analysis system on AWS reducing processing time by 50%. Enhanced NER and text classification models by 30%. Implemented anomaly detection system reducing false positives by 60%.",
+                  tech: ["Python", "AWS", "NLP", "CI/CD", "Prometheus"],
                 },
                 {
                   year: "2020",
                   role: "Data Science Intern",
-                  company: "Algoritmo Lab",
-                  description: "Performed statistical analysis on 100k+ transactions for anomaly detection and developed API for threshold-based alerting systems.",
-                  tech: ["Python", "Statistical Analysis", "SQL"],
+                  company: "Algoritmo Labs",
+                  description: "Developed ML model, converted to ONNX, and deployed with Golang runtime for client-side productivity tracking.",
+                  tech: ["Python", "ONNX", "Golang", "ML"],
                 },
               ].map((job, index) => (
                 <div
@@ -680,7 +680,7 @@ export default function Home() {
                 {[
                   { name: "GitHub", handle: "@arun2728", url: "https://github.com/arun2728" },
                   { name: "LinkedIn", handle: "arun-addagatla", url: "https://www.linkedin.com/in/arun-addagatla" },
-                  { name: "Resume", handle: "Open PDF", url: "https://drive.google.com/file/d/1d8OQIpGrO33-Pyp8J8rlAwLHwNfI_xOr/view?usp=drive_link" },
+                  { name: "Resume", handle: "Open PDF", url: "https://drive.google.com/file/d/1J_fvo26gRdc0qRPj7Z42vWKiNkDGZLCT/view" },
                   { name: "Blog", handle: "Medium", url: "https://arunaddagatla.medium.com/" },
                 ].map((social) => (
                   <Link
