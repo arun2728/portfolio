@@ -9,8 +9,26 @@ export default function Home() {
   const [isDark, setIsDark] = useState(true)
   const [activeSection, setActiveSection] = useState("")
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const sectionsRef = useRef<(HTMLElement | null)[]>([])
   const glowRef = useRef<HTMLDivElement>(null)
+
+  const navSections = [
+    { id: "intro", label: "Home" },
+    { id: "work", label: "Work" },
+    { id: "projects", label: "Projects" },
+    { id: "talks", label: "Talks" },
+    { id: "thoughts", label: "Writing" },
+    { id: "education", label: "Education" },
+    { id: "communities", label: "Communities" },
+    { id: "connect", label: "Connect" },
+  ]
+
+  const handleNavClick = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
+    setIsMobileMenuOpen(false)
+  }
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark)
@@ -21,6 +39,7 @@ export default function Home() {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight
       const progress = (window.scrollY / totalHeight) * 100
       setScrollProgress(progress)
+      setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -79,21 +98,118 @@ export default function Home() {
             : "radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0.2) 50%, transparent 70%)",
         }}
       />
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          isScrolled
+            ? "bg-background/70 backdrop-blur-xl border-b border-border/50"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex items-center justify-between h-16 sm:h-18">
+            <button
+              onClick={() => handleNavClick("intro")}
+              className="group flex items-center gap-2 text-sm font-mono tracking-wider"
+              aria-label="Go to top"
+            >
+              <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)] animate-pulse" />
+              <span className="text-foreground group-hover:text-muted-foreground transition-colors duration-300">
+                arun.addagatla
+              </span>
+            </button>
+
+            <nav className="hidden md:flex items-center gap-1">
+              {navSections.slice(1).map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => handleNavClick(section.id)}
+                  className={`relative px-3 py-2 text-sm transition-colors duration-300 ${
+                    activeSection === section.id
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {section.label}
+                  {activeSection === section.id && (
+                    <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+                  )}
+                </button>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                className="group p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
+                aria-label="Toggle theme"
+              >
+                {isDark ? (
+                  <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                )}
+              </button>
+
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
+                aria-label="Toggle menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isMobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div
+            className={`md:hidden overflow-hidden transition-all duration-300 ${
+              isMobileMenuOpen ? "max-h-[500px] pb-4" : "max-h-0"
+            }`}
+          >
+            <nav className="flex flex-col gap-1 pt-2 border-t border-border/50">
+              {navSections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => handleNavClick(section.id)}
+                  className={`text-left px-3 py-2.5 text-sm rounded-lg transition-colors duration-300 ${
+                    activeSection === section.id
+                      ? "text-foreground bg-muted/50"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                  }`}
+                >
+                  {section.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </header>
+
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
-          {["intro", "work", "talks", "thoughts", "education", "connect"].map((section) => (
-            <div key={section} className="group relative flex items-center">
+          {navSections.map((section) => (
+            <div key={section.id} className="group relative flex items-center">
               <button
-                onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => handleNavClick(section.id)}
                 className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                  activeSection === section 
-                    ? "bg-foreground shadow-[0_0_10px_rgba(255,255,255,0.3)]" 
+                  activeSection === section.id
+                    ? "bg-foreground shadow-[0_0_10px_rgba(255,255,255,0.3)]"
                     : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
                 }`}
-                aria-label={`Navigate to ${section}`}
+                aria-label={`Navigate to ${section.label}`}
               />
               <span className="absolute left-6 px-2 py-1 text-xs font-mono bg-background/90 backdrop-blur-sm border border-border rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {section.label}
               </span>
             </div>
           ))}
@@ -253,8 +369,127 @@ export default function Home() {
         </section>
 
         <section
-          id="talks"
+          id="projects"
           ref={(el) => { sectionsRef.current[2] = el }}
+          className="min-h-screen py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+                Projects
+                <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></span>
+              </h2>
+              <div className="text-sm text-muted-foreground font-mono">Open Source & Side Projects</div>
+            </div>
+
+            <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
+              {[
+                {
+                  title: "Content OS",
+                  status: "In Development",
+                  description:
+                    "AI-powered content orchestration monorepo that guides you through the full creation pipeline — clarify, outline, write, edit, and publish to Blogger — with autonomous agents handling each stage.",
+                  tech: ["Agentic AI", "LLM", "TypeScript", "Monorepo"],
+                  url: null,
+                },
+                {
+                  title: "Dev.to MCP Server",
+                  status: "Live",
+                  description:
+                    "A Model Context Protocol server exposing 35+ tools over the Dev.to (Forem) API v1. Lets AI agents like Claude and Cursor draft, edit, publish, and manage articles programmatically. Supports stdio, HTTP, and Cloudflare Workers transports, with a multi-arch Docker image on GHCR.",
+                  tech: ["MCP", "TypeScript", "Docker", "Cloudflare Workers"],
+                  url: "https://github.com/arun2728/dev-to-mcp",
+                },
+                {
+                  title: "Multilingual Indian Voicebot",
+                  status: "Freelance",
+                  description:
+                    "End-to-end voice assistant supporting 10+ Indian languages including Hindi and Marathi. Built speech-to-text with Conformer models on Triton, text-to-speech with Fastpitch, and a RAG pipeline using LangChain with embedding and reranker models for knowledge base queries.",
+                  tech: ["Conformer", "Fastpitch", "Triton", "RAG", "LangChain"],
+                  url: "https://www.freelancer.com/u/ArunAddagatla",
+                },
+                {
+                  title: "PDFChat",
+                  status: "Open Source",
+                  description:
+                    "Chat with any PDF — an early LLM-powered assistant that lets users ask natural language questions against uploaded documents, with grounded answers retrieved directly from the source.",
+                  tech: ["LLM", "RAG", "Python"],
+                  url: "https://github.com/arun2728/PdfChat",
+                },
+              ].map((project, index) => {
+                const card = (
+                  <article className="h-full p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover-lift glow-on-hover cursor-pointer">
+                    <div className="space-y-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
+                          {project.title}
+                        </h3>
+                        <span
+                          className={`shrink-0 px-2.5 py-0.5 text-[10px] font-mono border rounded-full ${
+                            project.status === "In Development"
+                              ? "text-yellow-500 border-yellow-500/50 bg-yellow-500/5"
+                              : project.status === "Live"
+                              ? "text-green-500 border-green-500/50 bg-green-500/5"
+                              : "text-muted-foreground border-border"
+                          }`}
+                        >
+                          {project.status}
+                        </span>
+                      </div>
+
+                      <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {project.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2 py-0.5 text-xs text-muted-foreground border border-border rounded"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+
+                      {project.url && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300 pt-1">
+                          <span>View project</span>
+                          <svg
+                            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )
+
+                return project.url ? (
+                  <Link
+                    key={index}
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    {card}
+                  </Link>
+                ) : (
+                  <div key={index} className="group">
+                    {card}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="talks"
+          ref={(el) => { sectionsRef.current[3] = el }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
@@ -429,7 +664,7 @@ export default function Home() {
 
         <section
           id="thoughts"
-          ref={(el) => { sectionsRef.current[3] = el }}
+          ref={(el) => { sectionsRef.current[4] = el }}
           className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
@@ -541,7 +776,7 @@ export default function Home() {
 
         <section
           id="education"
-          ref={(el) => { sectionsRef.current[4] = el }}
+          ref={(el) => { sectionsRef.current[5] = el }}
           className="py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
@@ -641,7 +876,91 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="connect" ref={(el) => { sectionsRef.current[5] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
+        <section
+          id="communities"
+          ref={(el) => { sectionsRef.current[6] = el }}
+          className="py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+              Communities
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-yellow-500 to-green-500 rounded-full"></span>
+            </h2>
+
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              Active member of global AI and developer communities — collaborating, learning, and contributing alongside engineers, researchers, and founders pushing the frontier of AI.
+            </p>
+
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  name: "Maxpool",
+                  description: "Community of AI engineers and founders building production AI systems.",
+                  url: "https://www.maxpool.dev/",
+                },
+                {
+                  name: "Entrepreneurs Arch",
+                  description: "Network of founders and operators shaping the next wave of startups.",
+                  url: "https://entrepreneursarch.com/",
+                },
+                {
+                  name: "Langfuse Community",
+                  description: "Open-source LLM observability — collaborating on tracing, evals, and prompt management.",
+                  url: "https://langfuse.com/",
+                },
+                {
+                  name: "Cloudflare Community",
+                  description: "Developers building on Workers, AI, and edge infrastructure at global scale.",
+                  url: "https://community.cloudflare.com/",
+                },
+                {
+                  name: "Learn AI Together",
+                  description: "One of the largest AI learning communities — discussing papers, models, and techniques.",
+                  url: "https://learnaitogethernewsletter.substack.com/",
+                },
+                {
+                  name: "AG2",
+                  description: "Open-source agentic AI framework community (formerly AutoGen) for multi-agent systems.",
+                  url: "https://ag2.ai/",
+                },
+                {
+                  name: "DAIR.AI",
+                  description: "Democratizing AI research — curated papers, prompt engineering guides, and applied AI learning.",
+                  url: "https://dair.ai/",
+                },
+              ].map((community) => (
+                <Link
+                  key={community.name}
+                  href={community.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-5 sm:p-6 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover-lift glow-on-hover"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-base sm:text-lg font-medium group-hover:text-muted-foreground transition-colors duration-300">
+                        {community.name}
+                      </h3>
+                      <svg
+                        className="w-4 h-4 text-muted-foreground/50 group-hover:text-foreground shrink-0 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {community.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="connect" ref={(el) => { sectionsRef.current[7] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
@@ -710,51 +1029,21 @@ export default function Home() {
               <div className="text-xs text-muted-foreground">Built with v0.dev by Arun Addagatla</div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <button
-                onClick={toggleTheme}
-                className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
-                aria-label="Toggle theme"
+            <button
+              onClick={() => handleNavClick("intro")}
+              className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              aria-label="Back to top"
+            >
+              <span>Back to top</span>
+              <svg
+                className="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                {isDark ? (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )}
-              </button>
-
-              <button className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300">
-                <svg
-                  className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+            </button>
           </div>
         </footer>
       </main>
