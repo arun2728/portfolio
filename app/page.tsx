@@ -22,6 +22,7 @@ export default function Home() {
     { id: "thoughts", label: "Writing" },
     { id: "education", label: "Education" },
     { id: "communities", label: "Communities" },
+    // { id: "opensource", label: "Open source" },
     { id: "connect", label: "Connect" },
   ]
 
@@ -504,19 +505,6 @@ export default function Home() {
             <div className="grid gap-8 sm:gap-10 lg:grid-cols-2">
               {[
                 {
-                  title: "Why LLMs Need Memory",
-                  event: "Lamatic.ai Community Session",
-                  location: "Online",
-                  date: "Mar 14, 2026",
-                  type: "Online",
-                  description:
-                    "Explored why memory is the missing infrastructure layer for production AI agents — covering long-term memory implementation, reliable and explainable AI systems at scale, and a live deep dive into Lamatic.ai's agent-building platform.",
-                  image: "/talk3.png",
-                  youtube: "https://www.youtube.com/watch?v=iwrBZWDOnSo",
-                  linkedin: "https://www.linkedin.com/events/whyllmsneedmemory7437920348341161984/",
-                  medium: "https://medium.com/@arunaddagatla/why-llms-need-memory-building-ai-agents-with-a-hands-on-implementation-849dbbf6fd0d",
-                },
-                {
                   title: "What is MCP and how it works",
                   event: "Daytona Developers Club Tour '25",
                   location: "Mumbai, India",
@@ -524,8 +512,32 @@ export default function Home() {
                   type: "In-Person",
                   description:
                     "Presented how Model Context Protocol (MCP) enables LLMs to connect with live data and tools in real-time, breaking free from rigid APIs and static integrations. Included hands-on Python and OpenAI demos.",
-                  image: "/talk1.png",
+                  image: "/talks/talk1.png",
                   medium: "https://medium.com/@arunaddagatla/building-your-first-mcp-server-with-python-a-beginners-guide-b76665e2b2ff",
+                },
+                {
+                  title: "Applications of Artificial Intelligence",
+                  event: "Omkaranada Institute of Management & Technology",
+                  location: "Online",
+                  date: "Apr 30, 2026",
+                  type: "Online",
+                  description:
+                    "60-minute virtual seminar for ~100 BSc-IT students on where AI is already winning — software, healthcare, finance, education, and the GenAI wave — closing with a live demo that shipped a working web app to the internet in under 8 minutes using only natural language.",
+                  image: "/talks/talk4.jpg",
+                  linkedin: "https://www.linkedin.com/posts/arun-addagatla_ai-generativeai-buildinpublic-share-7459124915628056577-850J",
+                },
+                {
+                  title: "Why LLMs Need Memory",
+                  event: "Lamatic.ai Community Session",
+                  location: "Online",
+                  date: "Mar 14, 2026",
+                  type: "Online",
+                  description:
+                    "Explored why memory is the missing infrastructure layer for production AI agents — covering long-term memory implementation, reliable and explainable AI systems at scale, and a live deep dive into Lamatic.ai's agent-building platform.",
+                  image: "/talks/talk3.png",
+                  youtube: "https://www.youtube.com/watch?v=iwrBZWDOnSo",
+                  linkedin: "https://www.linkedin.com/events/whyllmsneedmemory7437920348341161984/",
+                  medium: "https://medium.com/@arunaddagatla/why-llms-need-memory-building-ai-agents-with-a-hands-on-implementation-849dbbf6fd0d",
                 },
                 {
                   title: "Why Prompting Isn't Enough: The Case for RAG",
@@ -535,7 +547,7 @@ export default function Home() {
                   type: "Online",
                   description:
                     "Discussed why RAG is a system design problem, not just a feature — covering common failure modes, retrieval strategies, evaluation loops, and why prompt engineering alone falls short in production.",
-                  image: "/talk2.png",
+                  image: "/talks/talk2.png",
                   medium: "https://medium.com/gopenai/why-real-ai-systems-need-more-than-clever-prompts-41ccf0f1dbce",
                 },
                 {
@@ -960,7 +972,74 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="connect" ref={(el) => { sectionsRef.current[7] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
+        {/* <section
+          id="opensource"
+          ref={(el) => { sectionsRef.current[7] = el }}
+          className="py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+              Open source contributions
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full"></span>
+            </h2>
+
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              Contributing upstream to AI infrastructure projects — gateway integrations, provider parity, and fixes that help teams ship structured outputs reliably in production.
+            </p>
+
+            <div className="space-y-8 max-w-2xl">
+              <div className="space-y-4">
+                <div className="text-sm text-muted-foreground font-mono">PORTKEY · GATEWAY</div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Opened a pull request that forwards OpenAI-compatible <code className="text-xs px-1.5 py-0.5 rounded border border-border bg-muted/50 font-mono">response_format</code> (including <code className="text-xs px-1.5 py-0.5 rounded border border-border bg-muted/50 font-mono">json_schema</code>) to Mistral&apos;s chat completions API instead of dropping it during transformation, with a safe default for the inner schema name when clients omit it.
+                </p>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                  <Link
+                    href="https://github.com/Portkey-AI/gateway/pull/1615"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 px-4 py-2.5 text-sm border border-border rounded-lg hover:border-muted-foreground/50 hover:bg-muted/30 transition-all duration-300"
+                  >
+                    <span className="font-medium">Pull request #1615</span>
+                    <svg
+                      className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0 transform group-hover:translate-x-0.5 transition-transform duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </Link>
+                  <Link
+                    href="https://github.com/Portkey-AI/gateway/issues/1559"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 px-4 py-2.5 text-sm border border-border rounded-lg hover:border-muted-foreground/50 hover:bg-muted/30 transition-all duration-300"
+                  >
+                    <span className="font-medium">Issue #1559 · Mistral integration</span>
+                    <svg
+                      className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0 transform group-hover:translate-x-0.5 transition-transform duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="space-y-3 pt-2 border-t border-border/50">
+                <div className="text-sm text-muted-foreground font-mono">LITELLM</div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Planning to pick up LiteLLM issues next — focused on provider behavior, compatibility, and the kinds of edge cases that show up when routing production traffic across models.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section> */}
+
+        <section id="connect" ref={(el) => { sectionsRef.current[8] = el }} className="min-h-[60vh] py-20 sm:py-32 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
