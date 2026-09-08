@@ -310,7 +310,7 @@ export default function Home() {
                   year: "2024",
                   role: "Founding Engineer - AI",
                   company: "Lamatic.ai",
-                  description: "As the first engineering hire, built 80%+ of Lamatic's core stack. Architected serverless executor processing 1M+ monthly requests, designed AI evaluation framework with LLM-as-a-judge, and built Kubernetes-based ETL pipelines with OAuth systems.",
+                  description: "As the first engineering hire, built 80%+ of Lamatic's core stack. Built an agent harness for agentic flow generation — a 6-sub-agent pipeline with two validation loops and two-tier verification (deterministic checks + LLM-as-a-judge). Architected serverless executor processing 1M+ monthly requests and built Kubernetes-based ETL pipelines with OAuth systems.",
                   tech: ["Python", "Kubernetes", "LLM", "RAG", "Agentic AI"],
                 },
                 {
@@ -905,6 +905,11 @@ export default function Home() {
 
             <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[
+                {
+                  name: "The AI Collective — Mumbai Chapter",
+                  description: "Team member of the Mumbai chapter — organizing and contributing to a global community of AI builders, researchers, and founders.",
+                  url: "https://www.aicollective.com/",
+                },
                 {
                   name: "Maxpool",
                   description: "Community of AI engineers and founders building production AI systems.",
