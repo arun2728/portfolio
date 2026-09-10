@@ -18,6 +18,7 @@ export default function Home() {
     { id: "intro", label: "Home" },
     { id: "work", label: "Work" },
     { id: "projects", label: "Projects" },
+    { id: "stack", label: "Stack" },
     { id: "talks", label: "Talks" },
     { id: "thoughts", label: "Writing" },
     { id: "education", label: "Education" },
@@ -402,20 +403,28 @@ export default function Home() {
                   url: "https://github.com/arun2728/dev-to-mcp",
                 },
                 {
+                  title: "jobapply",
+                  status: "Open Source",
+                  description:
+                    "Local CLI that searches for jobs, deduplicates results across runs, and produces structured resume and cover letter drafts from your base profile using LangGraph agents — with checkpointing, optional PDF export, and pluggable models (Gemini, Anthropic, OpenAI, Ollama).",
+                  tech: ["LangGraph", "Python", "Agentic AI", "CLI"],
+                  url: "https://github.com/arun2728/jobapply",
+                },
+                {
+                  title: "LLMQuests",
+                  status: "Open Source",
+                  description:
+                    "A hands-on collection of LLM and agent experiments — implementations and deep-dives that back my writing on memory, RAG, MCP, and multi-agent systems.",
+                  tech: ["LLM", "RAG", "MCP", "Agents"],
+                  url: "https://github.com/arun2728/LLMQuests",
+                },
+                {
                   title: "Multilingual Indian Voicebot",
                   status: "Freelance",
                   description:
                     "End-to-end voice assistant supporting 10+ Indian languages including Hindi and Marathi. Built speech-to-text with Conformer models on Triton, text-to-speech with Fastpitch, and a RAG pipeline using LangChain with embedding and reranker models for knowledge base queries.",
                   tech: ["Conformer", "Fastpitch", "Triton", "RAG", "LangChain"],
                   url: "https://www.freelancer.com/u/ArunAddagatla",
-                },
-                {
-                  title: "PDFChat",
-                  status: "Open Source",
-                  description:
-                    "Chat with any PDF — an early LLM-powered assistant that lets users ask natural language questions against uploaded documents, with grounded answers retrieved directly from the source.",
-                  tech: ["LLM", "RAG", "Python"],
-                  url: "https://github.com/arun2728/PdfChat",
                 },
               ].map((project, index) => {
                 const card = (
@@ -484,6 +493,95 @@ export default function Home() {
                   </div>
                 )
               })}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="stack"
+          ref={(el) => { sectionsRef.current[7] = el }}
+          className="py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light relative inline-block">
+                Stack
+                <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></span>
+              </h2>
+              <div className="text-sm text-muted-foreground font-mono">Tools & Technologies</div>
+            </div>
+
+            <div className="grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  category: "Languages",
+                  items: ["TypeScript", "JavaScript", "Python", "Go", "SQL"],
+                },
+                {
+                  category: "Web & Backend",
+                  items: ["Node.js", "Next.js", "React", "Vercel"],
+                },
+                {
+                  category: "AI / LLM / ML",
+                  items: [
+                    "LangChain / LangGraph",
+                    "HF Transformers",
+                    "RAG",
+                    "MCP",
+                    "Agent Harness",
+                    "Evals / LLM-as-a-Judge",
+                    "Langfuse",
+                    "LoRA / qLoRA / PEFT",
+                  ],
+                },
+                {
+                  category: "Inference & Serving",
+                  items: ["ONNX", "TensorRT", "NVIDIA Triton", "Whisper (ASR/STT)"],
+                },
+                {
+                  category: "Data & Vector Stores",
+                  items: [
+                    "PostgreSQL",
+                    "Supabase",
+                    "pgvector",
+                    "Weaviate",
+                    "Pinecone",
+                    "Redis",
+                    "Airbyte",
+                  ],
+                },
+                {
+                  category: "Cloud & Infra",
+                  items: [
+                    "AWS (Lambda, ECR, S3)",
+                    "GCP (Cloud Run, BigQuery, GCS, VPC, OAuth)",
+                    "Cloudflare (Workers, WFP, Queues, R2, Containers, Durable Objects)",
+                    "Docker",
+                    "Kubernetes",
+                  ],
+                },
+                {
+                  category: "Observability & CI/CD",
+                  items: ["Prometheus", "Grafana", "Sentry", "GitHub Actions"],
+                },
+              ].map((group) => (
+                <div
+                  key={group.category}
+                  className="group p-6 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover-lift glow-on-hover"
+                >
+                  <div className="text-sm text-muted-foreground font-mono mb-4">{group.category}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="px-2.5 py-1 text-xs border border-border rounded-full text-muted-foreground group-hover:border-muted-foreground/40 transition-colors duration-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
