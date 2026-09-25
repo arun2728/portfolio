@@ -1181,7 +1181,7 @@ export default function Home() {
                 {[
                   { name: "GitHub", handle: "@arun2728", url: "https://github.com/arun2728" },
                   { name: "LinkedIn", handle: "arun-addagatla", url: "https://www.linkedin.com/in/arun-addagatla" },
-                  { name: "Resume", handle: "Open PDF", url: "https://drive.google.com/file/d/1J_fvo26gRdc0qRPj7Z42vWKiNkDGZLCT/view" },
+                  { name: "Resume", handle: "Open PDF", url: "https://drive.google.com/file/d/1kvmLQkozVcSftQqnoPzr2H9ABjb_Hyxu/view" },
                   { name: "Blog", handle: "Medium", url: "https://arunaddagatla.medium.com/" },
                 ].map((social) => (
                   <Link
