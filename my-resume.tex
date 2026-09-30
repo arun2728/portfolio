@@ -194,39 +194,24 @@
   % Summary %
   %---------%
 
-  % \tinysection{Summary}
-  % Simplified version of a monstrosity that I built back in college using current best practices.
+  \vspace{4pt}
+  {\small Founding engineer with experience in shipping \textbf{agent harnesses}, \textbf{evals}, and \textbf{context systems}. First hire at Lamatic: owned the loop that turns messy intent into verified output (\textbf{LLM-as-a-judge} in the loop, not a dashboard after), plus ingest from Slack, GitHub, and docs so agents write from a real corpus. \textbf{TypeScript} + Python across the full product. Drawn to turning editorial judgment into something an agent can actually run.}
+  \vspace{2pt}
 
   %--------%
   % Skills %
   %--------%
 
-  % \section{Skills}
-
-  % \begin{multicols}{2}
-  %   \begin{itemize}[itemsep=-2px, parsep=1pt, leftmargin=75pt]
-  %     \item[\textbf{Languages}] Python, C/C++, Golang, JS
-  %     \item[\textbf{Cloud}] GCP, AWS, DigitalOcean, Cloudflare
-  %     \item[\textbf{DevOps}] Docker, Kubernetes, ONNX, Triton, TensorRT
-  %     \item[\textbf{OS}] Debian, Ubuntu, CentOS, BSD, AIX
-  %     \item[\textbf{Policies}] CIS, SOC2, PCI-DSS, GDPR, ITIL
-  %     \item[\textbf{Testing}] Pytest, Docker, CircleCI, Jenkins, Inspec
-  %   \end{itemize}
-  % \end{multicols}
-
   \section{Skills}
 
 \begin{multicols}{2}
   \begin{itemize}[itemsep=-2px, parsep=1pt, leftmargin=75pt]
-    \item[\textbf{Programming}] Python, Golang, C/C++, JavaScript
-    \item[\textbf{AI/ML}] LLM, MCP, RAG, Agentic AI, ASR, TTS
-    \item[\textbf{Inference}] ONNX, TensorRT, Triton, JAX, PEFT, LoRA
-    \item[\textbf{Cloud/Infra}] GCP, AWS, Cloudflare, Kubernetes
-    % \item[\textbf{Data Systems}] ETL Pipelines, VPC Networking, OAuth (Google, Microsoft, GitHub), Vector Search
-    \item[\textbf{DevOps/CI-CD}] Docker, VPC, GitHub Actions, Jenkins
-    % \item[\textbf{Systems}] Linux (Debian, Ubuntu, CentOS), BSD, AIX
-    \item[\textbf{Monitoring}] Prometheus, Grafana, Sentry
-    % \item[\textbf{Compliance}] CIS, SOC2, PCI-DSS, GDPR, ITIL
+    \item[\textbf{Languages}] TypeScript, Python, Golang, JavaScript
+    \item[\textbf{Frontend}] Next.js, React, Tailwind CSS
+    \item[\textbf{AI/Agents}] Harness, Evals, LLM-as-a-judge, MCP
+    \item[\textbf{Context}] RAG, Reranking, Chunking, ETL ingest
+    \item[\textbf{Backend/Data}] PostgreSQL, pgvector, Redis, GitHub
+    \item[\textbf{Cloud/Infra}] Kubernetes, Docker, GCP, AWS, Cloudflare
   \end{itemize}
 \end{multicols}
 
@@ -241,19 +226,17 @@
 \headingIt{Founding Engineer - AI}{}
 
 \begin{resume_list}
-\item As the \textbf{first engineering hire}, built over \textbf{80\%} of Lamatic’s core stack, spanning \textbf{AI systems}, \textbf{backend infrastructure}, and critical \textbf{frontend} components.
+\item As the \textbf{first engineering hire}, built \textbf{80\%+} of the core stack end-to-end: \textbf{Next.js/React/TypeScript} frontend, \textbf{Python} backend, and the agent systems behind them. Owned work from the first customer conversation through production.
 
-\item Built an \textbf{agent harness} for \textbf{agentic flow generation}: a \textbf{6-sub-agent} pipeline with \textbf{2 validation loops} that autonomously constructs workflows from user intent, using schema-constrained tools, DFS/parallel node filling, and \textbf{two-tier verification} (deterministic checks + \textbf{LLM-as-a-judge} rubric grading).
+\item \textbf{Agent harness:} a \textbf{6-sub-agent} pipeline with schema-constrained tools, \textbf{2 validation loops}, and \textbf{two-tier verification} (deterministic checks + \textbf{LLM-as-a-judge} rubric grading) --- so a run self-corrects or fails loudly instead of shipping empty, confident output.
 
-\item Built a configurable \textbf{AI evaluation framework} with \textbf{LLM-as-a-judge} scoring, plus advanced AI nodes (semantic \textbf{RAG}, \textbf{Multi-Agent Supervisor}) dogfooded to power the flow-generation harness.
+\item Built a configurable \textbf{eval framework} (LLM-as-a-judge scoring, regression suites) and dogfooded it into the harness --- turning editorial-style quality into a number the team could move weekly, not a prompt they hoped still worked.
 
-\item Created an internal \textbf{AI-powered Hiring Agent} using \textbf{multimodal agents} (resume parsing + video analysis), automating candidate shortlisting and cutting recruiter workload by \textbf{70\%}.
+\item Built the \textbf{context layer} agents write from: semantic \textbf{RAG}, reranking, chunking, plus \textbf{Kubernetes ETL} from Drive/S3/SharePoint and real-time \textbf{Slack}/\textbf{Teams} ingest with GitHub OAuth --- noisy, changing sources, strong work on the first attempt.
 
-\item Architected a \textbf{serverless executor} processing \textbf{60M+ monthly requests} and a deployment engine at \textbf{1K+ deployments/min}, cutting deployment latency from 2 min to 15s (\textbf{87\%}).
+\item Designed how agents hold context across \textbf{long-running jobs}: \textbf{Multi-Agent Supervisor}, \textbf{MCP} tool orchestration (\textbf{50+ tools}), bounded repair retries.
 
-\item Engineered secure (VPC), scalable \textbf{Kubernetes-based ETL pipelines} (Drive, S3, SharePoint) with \textbf{OAuth} for Google, Microsoft, and GitHub, plus real-time \textbf{Slack}/\textbf{Teams} webhook sync.
-
-\item Designed Lamatic’s \textbf{version control system (VCS)} with native \textbf{GitHub integration} for automatic flow sync, reproducibility, and collaboration.
+\item Architected a \textbf{serverless executor} at \textbf{60M+ monthly requests} and a deployment engine at \textbf{1K+ deploys/min} (\textbf{87\%} faster). Native \textbf{GitHub} VCS for flow sync.
 \end{resume_list}
 
 
@@ -334,27 +317,9 @@
   \headingBf{Samespace}{Oct 2022 -- Mar 2024}
 \headingIt{SDE - AI/ML}{}
 \begin{resume_list}
-  \item Designed and deployed conversational \textbf{chatbots} and \textbf{voicebots} handling \textbf{95\%} of customer queries in contact centers using word embeddings, \textbf{reranking} methods, and instruction-tuned \textbf{Zephyr} and \textbf{GPT-4}.
-
-    \item Fine-tuned open-source LLMs (\textbf{Mistral}, \textbf{LLaMA-2}) with \textbf{LoRA/PEFT} on bilingual datasets, improving \textbf{fluency by 30\%}.
-
-      \item Built scalable \textbf{LLM Inference Engine} with dynamic batching and multi-GPU support, achieving \textbf{106 tokens/sec} throughput.
-
-  
-% \item Improved the \textbf{fluency} and \textbf{contextual relevance} of open-source LLMs (\textbf{Mistral}, \textbf{LLaMA-2}) by \textbf{30\%} via \textbf{fine-tuning} on \textbf{bilingual} (Tagalog-English) and domain-specific datasets, leveraging model \textbf{quantization} techniques (\textbf{PEFT}, \textbf{LoRA}, \textbf{8-bit}).
-
-  
-  % \item Engineered a scalable \textbf{LLM Inference Engine} with \textbf{dynamic batching}, \textbf{multi-host GPU} support, and \textbf{PagedAttention}, achieving peak throughput of \textbf{106 tokens/sec}.
-
-    \item Optimized \textbf{Whisper V3 large ASR} models with \textbf{ONNX/TensorRT} and \textbf{Triton} deployment, reducing latency to \textbf{0.1-0.4s}.
-
-
-  % \item Optimized ASR pipelines by converting large models (\textbf{Whisper-large-v3}) to \textbf{ONNX} and \textbf{TensorRT}, deployed with \textbf{Triton} and \textbf{JAX}, reducing transcription latency to \textbf{0.1--0.4s}.
-  
-  % \item Implemented multimodal \textbf{image} and \textbf{vector search} using \textbf{LLaVA} and \textbf{GPT-4}, boosting search engine performance by \textbf{60\%}.
-
-    \item Implemented multimodal search using \textbf{LLaVA} and \textbf{GPT-4}, boosting performance by \textbf{60\%}.
-
+  \item Designed and deployed conversational \textbf{chatbots} and \textbf{voicebots} handling \textbf{95\%} of customer queries using embeddings, \textbf{reranking}, and instruction-tuned \textbf{Zephyr} and \textbf{GPT-4}.
+  \item Fine-tuned open-source LLMs (\textbf{Mistral}, \textbf{LLaMA-2}) with \textbf{LoRA/PEFT} on bilingual datasets, improving \textbf{fluency by 30\%}.
+  \item Built a scalable \textbf{LLM inference engine} with dynamic batching and multi-GPU support, achieving \textbf{106 tokens/sec}; optimized \textbf{Whisper V3} with ONNX/TensorRT/Triton to \textbf{0.1--0.4s}.
 \end{resume_list}
 
 
@@ -372,10 +337,8 @@
 \headingBf{Enterpret}{Sept 2021 - Aug 2022}
 \headingIt{Machine Learning Intern - NLP}{}
 \begin{resume_list}
-\item Built serverless \textbf{multilingual sentiment analysis} system on \textbf{AWS} (Lambda, ECR); reduced processing time by \textbf{50\%}
-\item Designed \textbf{CI/CD pipelines} and \textbf{Docker} containerization with testing suites for integration, and load testing
-\item Enhanced \textbf{NER} and \textbf{text classification} models by \textbf{30\%} through hyperparameter tuning
-\item Implemented \textbf{anomaly detection} system using CloudWatch, Prometheus, and \textbf{Grafana}; reduced false positives by \textbf{60\%}
+\item Built serverless \textbf{multilingual sentiment analysis} on \textbf{AWS} (Lambda, ECR), cutting processing time \textbf{50\%}; improved \textbf{NER}/classification \textbf{30\%}.
+\item Built \textbf{CI/CD} + \textbf{Docker} pipelines with integration/load tests, and \textbf{anomaly detection} (Prometheus/\textbf{Grafana}) cutting false positives \textbf{60\%}.
 \end{resume_list}
 
 
@@ -390,11 +353,7 @@
 % \end{resume_list}
 
 
-\headingBf{Algoritmo Labs}{Jul 2020 - Sep 2020}
-\headingIt{Data Science Intern}{}
-\begin{resume_list}
-    \item Developed ML model, converted to \textbf{ONNX}, and deployed with \textbf{Golang} runtime for client-side productivity tracking
-\end{resume_list}
+% Algoritmo Labs (Jul--Sep 2020) trimmed for length on the Manicule-tailored version.
 
 
 
@@ -413,7 +372,6 @@
 
   \headingBf{University of Mumbai}{} % Note: Adding year(s) exposes an implied age
   \headingIt{Bachelor of Engineering in Computer Science}{\textbf{GPA:} \textbf{9.6}/10}
-  \headingIt{Course Work: OS, Data Structures and Algorithms, ML, Networking, NLP, SE, DBMS, CN, Probability, and Statistics}{}
 
   % \vspace{5pt}
   % \headingBf{Certifications}{}
@@ -435,12 +393,15 @@
 %     \item Implemented Model Quantisation techniques like \textbf{PEFT}, \textbf{LORA} and \textbf{8-bit quantization}
 %   \end{resume_list}
 
-  \headingBf{Multilingual Indian Voicebot \href{https://www.freelancer.com/u/ArunAddagatla}{(Freelancing)} }{}
+  \headingBf{Content OS \href{https://github.com/arun2728/content-os}{(github.com/arun2728/content-os)} }{}
   \begin{resume_list}
-    \item Developed a Multilingual Indian Voicebot supporting \textbf{10+ Indian languages}, including Hindi and Marathi, to act as an assistant and address knowledge base queries.
-    \item Implemented Speech2Text functionality by developing and deploying \textbf{Conformer} models using Triton.
-    \item Implemented Text2Speech functionality by developing and deploying a \textbf{Fastpitch} model.
-    \item Constructed the bot using a \textbf{RAG} pipeline with Python, \textbf{langchain}, embedding, and \textbf{reranker} models.
+    \item AI content-orchestration pipeline --- \textbf{clarify $\rightarrow$ outline $\rightarrow$ write $\rightarrow$ edit $\rightarrow$ publish} --- with autonomous agents owning each stage instead of a one-shot generate.
+    \item Each stage has a quality gate (structure, claim, human review) so one-shot generation cannot ship as finished writing.
+  \end{resume_list}
+
+  \headingBf{Dev.to MCP Server \href{https://github.com/arun2728/dev-to-mcp}{(github.com/arun2728/dev-to-mcp)} }{}
+  \begin{resume_list}
+    \item Built an \textbf{MCP} server with \textbf{35+ tools} over the Dev.to API (stdio, HTTP, Cloudflare Workers) so agents can draft, edit, and publish technical content through tools instead of stuffing a prompt.
   \end{resume_list}
 
 \end{document}

@@ -311,7 +311,7 @@ export default function Home() {
                   year: "2024",
                   role: "Founding Engineer - AI",
                   company: "Lamatic.ai",
-                  description: "As the first engineering hire, built 80%+ of Lamatic's core stack. Built an agent harness for agentic flow generation — a 6-sub-agent pipeline with two validation loops and two-tier verification (deterministic checks + LLM-as-a-judge). Architected serverless executor processing 1M+ monthly requests and built Kubernetes-based ETL pipelines with OAuth systems.",
+                  description: "As the first engineering hire, built 80%+ of Lamatic's core stack. Built an agent harness for agentic flow generation — a 6-sub-agent pipeline with two validation loops and two-tier verification (deterministic checks + LLM-as-a-judge). Architected serverless executor processing 60M+ monthly requests and built Kubernetes-based ETL pipelines with OAuth systems.",
                   tech: ["Python", "Kubernetes", "LLM", "RAG", "Agentic AI"],
                 },
                 {
